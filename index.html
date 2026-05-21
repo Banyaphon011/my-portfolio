@@ -83,6 +83,11 @@ nav {
   color: var(--white);
 }
 .nav-logo span { color: var(--red); }
+.nav-right-container {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
 .nav-links { display: flex; gap: 32px; list-style: none; }
 .nav-links a {
   font-family: 'Share Tech Mono', monospace;
@@ -109,25 +114,21 @@ nav {
 .lang-switcher {
   display: flex;
   gap: 8px;
-  margin-left: auto;
-  margin-right: 32px;
 }
 .lang-btn {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--gray);
-  padding: 4px 10px;
   font-family: 'Share Tech Mono', monospace;
   font-size: 11px;
+  padding: 4px 8px;
   cursor: pointer;
   transition: all 0.3s;
-  border-radius: 2px;
 }
-.lang-btn.active, .lang-btn:hover {
+.lang-btn:hover, .lang-btn.active {
   border-color: var(--red);
   color: var(--white);
-  background: rgba(94,200,245,0.08);
-  box-shadow: 0 0 10px rgba(94,200,245,0.2);
+  background: rgba(94,200,245,0.1);
 }
 
 /* JP FRAME MIXIN */
@@ -166,7 +167,8 @@ section {
   padding-top: 120px;
 }
 .hero-mascot {
-  width: 120px; height: 120px;
+  width: 120px;
+  height: 120px;
   margin-bottom: 24px;
   animation: float 4s ease-in-out infinite;
   filter: drop-shadow(0 0 20px rgba(94,200,245,0.7));
@@ -269,6 +271,7 @@ section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+  margin-top: 24px;
 }
 .about-card {
   background: var(--card-bg);
@@ -308,7 +311,6 @@ section {
 }
 .about-card-text { font-size: 14px; color: var(--gray); line-height: 1.8; }
 .about-main {
-  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 32px;
@@ -669,13 +671,10 @@ footer {
 footer .footer-jp { font-size: 24px; margin-bottom: 8px; opacity: 0.1; }
 footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--gray); }
 
-/* MULTI-LANGUAGE DISPLAY DISPLAY CLASSES */
-.lang-en { display: none; } /* ซ่อนภาษาอังกฤษเป็นค่าเริ่มต้น */
-
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  nav { padding: 12px 20px; }
-  .lang-switcher { margin-right: 16px; }
+  nav { padding: 12px 20px; flex-direction: column; gap: 12px; align-items: center; }
+  .nav-right-container { gap: 16px; width: 100%; justify-content: space-between; }
   .nav-links { gap: 16px; }
   .nav-links a { font-size: 10px; letter-spacing: 1px; }
   section { padding: 80px 20px; }
@@ -706,32 +705,18 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
 
 <nav>
   <div class="nav-logo">BANYA<span>P</span>HON</div>
-  
-  <div class="lang-switcher">
-    <button onclick="switchLang('th', event)" class="lang-btn active">TH</button>
-    <button onclick="switchLang('en', event)" class="lang-btn">EN</button>
+  <div class="nav-right-container">
+    <ul class="nav-links">
+      <li><a href="#about" id="menu-about">ABOUT</a></li>
+      <li><a href="#photo" id="menu-photo">PHOTO</a></li>
+      <li><a href="#projects" id="menu-works">WORKS</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="switchLang('th')">TH</button>
+      <button class="lang-btn" onclick="switchLang('en')">EN</button>
+      <button class="lang-btn" onclick="switchLang('jp')">JP</button>
+    </div>
   </div>
-
-  <ul class="nav-links">
-    <li>
-      <a href="#about">
-        <span class="lang-th">เกี่ยวกับฉัน</span>
-        <span class="lang-en">ABOUT</span>
-      </a>
-    </li>
-    <li>
-      <a href="#photo">
-        <span class="lang-th">ภาพถ่าย</span>
-        <span class="lang-en">PHOTO</span>
-      </a>
-    </li>
-    <li>
-      <a href="#projects">
-        <span class="lang-th">ผลงาน</span>
-        <span class="lang-en">WORKS</span>
-      </a>
-    </li>
-  </ul>
 </nav>
 
 <section id="hero">
@@ -784,85 +769,55 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
     <ellipse cx="71" cy="150" rx="8" ry="4" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.6"/>
   </svg>
 
-  <div class="hero-eyebrow">ウルトラマンコスモス × ポートフォリオ</div>
+  <div class="hero-eyebrow" id="hero-eyebrow">ウルトラマンコスモス × ポートフォリオ</div>
   <h1 class="hero-name">BANYAPHON</h1>
-  <div class="hero-jp">บัญญพนธ์ · バンヤポン · CREATOR</div>
-  <div class="hero-tagline">コスモス · COSMOS · LUNA MODE</div>
+  <div class="hero-jp" id="hero-jp">บัญญพนธ์ · バンヤポン · CREATOR</div>
+  <div class="hero-tagline" id="hero-tagline">コスモス · COSMOS · LUNA MODE</div>
   <div class="hero-scroll">
-    <span>SCROLL</span>
+    <span id="hero-scroll-text">SCROLL</span>
     <div class="hero-scroll-line"></div>
   </div>
 </section>
 
-<div id="about" class="about-main about-card reveal">
-  <div class="about-avatar">💻</div>
-  <div class="about-bio">
-    <div class="lang-th">
+<section id="about">
+  <div class="sec-header reveal">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title" id="title-about">ABOUT</h2>
+    <div class="sec-line"></div>
+    <span class="sec-jp">概要</span>
+  </div>
+
+  <div class="about-main about-card reveal">
+    <div class="about-avatar">💻</div>
+    <div class="about-bio" id="about-bio-content">
       <h3>สวัสดีครับ! こんにちは！</h3>
-      <p>
-        ผมชื่อบัญญพนธ์ เป็นคนที่ชื่นชอบการพัฒนาและเขียนโค้ด 
-        สนใจทั้งการพัฒนาเว็บไซต์ ระบบต่าง ๆ และการพัฒนาเกม 
-        ผมสนุกกับการสร้างสิ่งใหม่ ๆ ผ่านการเขียนโปรแกรมและเรียนรู้เทคโนโลยีใหม่อยู่เสมอ
-      </p>
+      <p>ผมชื่อบัญญพนธ์ เป็นคนที่ชื่นชอบการพัฒนาและเขียนโค้ด สนใจทั้งการพัฒนาเว็บไซต์ ระบบต่าง ๆ และการพัฒนาเกม ผมสนุกกับการสร้างสิ่งใหม่ ๆ ผ่านการเขียนโปรแกรมและเรียนรู้เทคโนโลยีใหมอยู่เสมอ</p>
       <br>
-      <p>
-        นอกจากนี้ยังชอบการถ่ายภาพ ชอบเก็บบรรยากาศและมุมมองต่าง ๆ ผ่านกล้อง 
-        และเป็นคนที่ชื่นชอบสะสมโมเดล Kamen Rider และ Ultraman 
-        ซึ่งเป็นแรงบันดาลใจด้านดีไซน์และความคิดสร้างสรรค์ของผมอีกด้วย
-      </p>
+      <p>นอกจากนี้ยังชอบการถ่ายภาพ ชอบเก็บบรรยากาศและมุมมองต่าง ๆ ผ่านกล้อง และเป็นคนที่ชื่นชอบสะสมโมเดล Kamen Rider และ Ultraman ซึ่งเป็นแรงบันดาลใจด้านดีไซน์และความคิดสร้างสรรค์ของผมอีกด้วย</p>
+      <br>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-card reveal" style="transition-delay:0.1s">
+      <div class="about-card-icon">💻</div>
+      <div class="about-card-title">CODING</div>
+      <div class="about-card-text" id="card-coding-text">ชื่นชอบการพัฒนาเว็บไซต์ เขียนโปรแกรม และเรียนรู้เทคโนโลยีใหม่ ๆ สนใจทั้ง Backend, Frontend และการสร้างระบบที่ใช้งานได้จริง</div>
     </div>
 
-    <div class="lang-en">
-      <h3>Hello! こんにちは！</h3>
-      <p>
-        My name is Banyaphon. I am passionate about software development and coding. 
-        I am interested in web development, systems architecture, and game creation. 
-        I enjoy building new innovations through coding and constantly learning new technologies.
-      </p>
-      <br>
-      <p>
-        Additionally, I love photography, capturing unique moments and perspectives through my lens. 
-        I am also a collector of Kamen Rider and Ultraman figures, 
-        which serve as a great source of inspiration for my design and creativity.
-      </p>
+    <div class="about-card reveal" style="transition-delay:0.2s">
+      <div class="about-card-icon">🎮</div>
+      <div class="about-card-title">GAME DEVELOPMENT</div>
+      <div class="about-card-text" id="card-game-text">สนใจด้านการพัฒนาเกมและระบบต่าง ๆ ภายในเกม ชอบศึกษา game mechanics, UI และการออกแบบประสบการณ์ของผู้เล่น</div>
     </div>
-    <br>
 
-    <span class="tag">GAME DEVELOPMENT</span>
-    <span class="tag">CODING</span>
-    <span class="tag">WEB DEVELOPMENT</span>
-    <span class="tag">PHOTOGRAPHY</span>
-    <span class="tag">KAMEN RIDER</span>
-    <span class="tag">ULTRAMAN</span>
+    <div class="about-card reveal" style="transition-delay:0.3s">
+      <div class="about-card-icon">📷</div>
+      <div class="about-card-title">PHOTOGRAPHY & FIGURES</div>
+      <div class="about-card-text" id="card-photo-text">ชื่นชอบการถ่ายภาพและสะสมโมเดล Kamen Rider กับ Ultraman สนใจงานออกแบบ คาแรกเตอร์ และรายละเอียดของตัวละคร Tokusatsu</div>
+    </div>
   </div>
-</div>
-
-<div class="about-card reveal" style="transition-delay:0.1s">
-  <div class="about-card-icon">💻</div>
-  <div class="about-card-title">CODING</div>
-  <div class="about-card-text">
-    ชื่นชอบการพัฒนาเว็บไซต์ เขียนโปรแกรม และเรียนรู้เทคโนโลยีใหม่ ๆ 
-    สนใจทั้ง Backend, Frontend และการสร้างระบบที่ใช้งานได้จริง
-  </div>
-</div>
-
-<div class="about-card reveal" style="transition-delay:0.2s">
-  <div class="about-card-icon">🎮</div>
-  <div class="about-card-title">GAME DEVELOPMENT</div>
-  <div class="about-card-text">
-    สนใจด้านการพัฒนาเกมและระบบต่าง ๆ ภายในเกม 
-    ชอบศึกษา game mechanics, UI และการออกแบบประสบการณ์ของผู้เล่น
-  </div>
-</div>
-
-<div class="about-card reveal" style="transition-delay:0.3s">
-  <div class="about-card-icon">📷</div>
-  <div class="about-card-title">PHOTOGRAPHY & FIGURES</div>
-  <div class="about-card-text">
-    ชื่นชอบการถ่ายภาพและสะสมโมเดล Kamen Rider กับ Ultraman 
-    สนใจงานออกแบบ คาแรกเตอร์ และรายละเอียดของตัวละคร Tokusatsu
-  </div>
-</div>
+</section>
 
 <section id="photo">
   <div class="sec-header reveal">
@@ -876,7 +831,7 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
       <div class="gallery-placeholder">
         <div class="ph-icon">📷</div>
         <span>PHOTO 01</span>
-        <span style="font-size:9px;opacity:0.6">แทนที่ด้วยรูปของคุณ</span>
+        <span class="replace-text" style="font-size:9px;opacity:0.6">แทนที่ด้วยรูปของคุณ</span>
       </div>
       <div class="gallery-overlay"><span>PHOTO 01</span></div>
     </div>
@@ -901,7 +856,7 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
       <div class="gallery-overlay"><span>PHOTO 06</span></div>
     </div>
   </div>
-  <p style="margin-top:16px; font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--gray); text-align:center;">
+  <p id="photo-instruction" style="margin-top:16px; font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--gray); text-align:center;">
     💡 แทนที่ .gallery-placeholder ด้วย &lt;img src="path/to/photo.jpg"&gt;
   </p>
 </section>
@@ -919,7 +874,7 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
     <span class="sec-jp">プロジェクト</span>
   </div>
   <div id="projects-grid" class="projects-grid reveal">
-    <div class="projects-loading">⟨ LOADING GITHUB DATA... ⟩</div>
+    <div class="projects-loading" id="projects-loading-text">⟨ LOADING GITHUB DATA... ⟩</div>
   </div>
 </section>
 
@@ -974,31 +929,133 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
   </div>
   <canvas id="game-canvas" width="380" height="140"></canvas>
   <div id="game-info">
-    <span>SPACE / TAP = JUMP</span>
+    <span id="game-controls">SPACE / TAP = JUMP</span>
     <span id="game-status">PRESS SPACE TO START</span>
   </div>
 </div>
 
 <script>
-// ─── LANGUAGE SWITCHER FUNCTION ─────────────────────
-function switchLang(lang, event) {
-  const thElements = document.querySelectorAll('.lang-th');
-  const enElements = document.querySelectorAll('.lang-en');
+// ─── TRANSLATION DATA ─────────────────────────────────
+const translations = {
+  th: {
+    menuAbout: "ABOUT", menuPhoto: "PHOTO", menuWorks: "WORKS",
+    heroEyebrow: "ウルトラマンコスモス × ポートフォリオ",
+    heroJp: "บัญญพนธ์ · บังยポン · CREATOR",
+    heroTagline: "コスモス · COSMOS · LUNA MODE",
+    heroScroll: "SCROLL",
+    titleAbout: "ABOUT",
+    aboutBio: "<h3>สวัสดีครับ! こんにちは！</h3><p>ผมชื่อบัญญพนธ์ เป็นคนที่ชื่นชอบการพัฒนาและเขียนโค้ด สนใจทั้งการพัฒนาเว็บไซต์ ระบบต่าง ๆ และการพัฒนาเกม ผมสนุกกับการสร้างสิ่งใหม่ ๆ ผ่านการเขียนโปรแกรมและเรียนรู้เทคโนโลยีใหม่ๆ อยู่เสมอ</p><br><p>นอกจากนี้ยังชอบการถ่ายภาพ ชอบเก็บบรรยากาศและมุมมองต่าง ๆ ผ่านกล้อง และเป็นคนที่ชื่นชอบสะสมโมเดล Kamen Rider และ Ultraman ซึ่งเป็นแรงบันดาลใจด้านดีไซน์และความคิดสร้างสรรค์ของผมอีกด้วย</p><br><span class='tag'>GAME DEVELOPMENT</span><span class='tag'>CODING</span><span class='tag'>WEB DEVELOPMENT</span><span class='tag'>PHOTOGRAPHY</span><span class='tag'>KAMEN RIDER</span><span class='tag'>ULTRAMAN</span>",
+    cardCoding: "ชื่นชอบการพัฒนาเว็บไซต์ เขียนโปรแกรม และเรียนรู้เทคโนโลยีใหม่ ๆ สนใจทั้ง Backend, Frontend และการสร้างระบบที่ใช้งานได้จริง",
+    cardGame: "สนใจด้านการพัฒนาเกมและระบบต่าง ๆ ภายในเกม ชอบศึกษา game mechanics, UI และการออกแบบประสบการณ์ของผู้เล่น",
+    cardPhoto: "ชื่นชอบการถ่ายภาพและสะสมโมเดล Kamen Rider กับ Ultraman สนใจงานออกแบบ คาแรกเตอร์ และรายละเอียดของตัวละคร Tokusatsu",
+    replaceText: "แทนที่ด้วยรูปของคุณ",
+    photoInst: "💡 แทนที่ .gallery-placeholder ด้วย &lt;img src=\"path/to/photo.jpg\"&gt;",
+    loadingGit: "⟨ กำลังโหลดข้อมูล GITHUB... ⟩",
+    noRepo: "⟨ ไม่พบคลังโค้ด ⟩",
+    failRepo: "⟨ โหลดล้มเหลว · ตรวจสอบการเชื่อมต่อ ⟩",
+    gameControls: "SPACE / TAP = กระโดด",
+    gameStatusStart: "กด SPACE เพื่อเริ่มเกม",
+    gameStatusFight: "กำลังต่อสู้!",
+    gameStatusOver: "จบเกม",
+    gameTextStart: "กด SPACE / TAP เพื่อเริ่มเกม",
+    gameTextOver: "จบเกม · แตะเพื่อเล่นใหม่",
+    speechBubble: ["วันนี้เป็นอย่างไรบ้าง? 😊", "อยากให้ช่วยอะไรไหม?", "ファイト！Fight on!", "HENSHIN! 変身！⚡", "ดูผลงานของผมด้วยนะ!", "シュワッチ！Shuwatch!", "คุณถ่ายรูปสวยไหม? 📷", "Let's go, Rider Kick! 🦶"]
+  },
+  en: {
+    menuAbout: "ABOUT", menuPhoto: "PHOTO", menuWorks: "WORKS",
+    heroEyebrow: "ULTRAMAN COSMOS × PORTFOLIO",
+    heroJp: "BANYAPHON · CREATOR",
+    heroTagline: "COSMOS · LUNA MODE",
+    heroScroll: "SCROLL",
+    titleAbout: "ABOUT",
+    aboutBio: "<h3>Hello! Welcome!</h3><p>My name is Banyaphon. I am passionate about development and coding, with interests spanning web development, various systems, and game development. I enjoy creating new things through programming and always learning new technologies.</p><br><p>Additionally, I love photography, capturing atmospheres and different perspectives through the lens. I am also an avid collector of Kamen Rider and Ultraman models, which serve as my inspiration for design and creativity.</p><br><span class='tag'>GAME DEVELOPMENT</span><span class='tag'>CODING</span><span class='tag'>WEB DEVELOPMENT</span><span class='tag'>PHOTOGRAPHY</span><span class='tag'>KAMEN RIDER</span><span class='tag'>ULTRAMAN</span>",
+    cardCoding: "Passionate about web development, programming, and learning new technologies. Interested in Backend, Frontend, and building practical systems.",
+    cardGame: "Interested in game development and in-game systems. Love studying game mechanics, UI, and player experience design.",
+    cardPhoto: "Enjoy photography and collecting Kamen Rider and Ultraman figures. Interested in Tokusatsu character design and details.",
+    replaceText: "Replace with your photo",
+    photoInst: "💡 Replace .gallery-placeholder with &lt;img src=\"path/to/photo.jpg\"&gt;",
+    loadingGit: "⟨ LOADING GITHUB DATA... ⟩",
+    noRepo: "⟨ NO REPOS FOUND ⟩",
+    failRepo: "⟨ FAILED TO LOAD · CHECK CONNECTION ⟩",
+    gameControls: "SPACE / TAP = JUMP",
+    gameStatusStart: "PRESS SPACE TO START",
+    gameStatusFight: "FIGHTING!",
+    gameStatusOver: "GAME OVER",
+    gameTextStart: "PRESS SPACE / TAP TO START",
+    gameTextOver: "GAME OVER · TAP TO RETRY",
+    speechBubble: ["How is your day? 😊", "Need any help?", "Fight on! ⟨ファイト！⟩", "HENSHIN! ⚡", "Check out my works!", "Shuwatch! ⟨シュワッチ！⟩", "Do you like photography? 📷", "Let's go, Rider Kick! 🦶"]
+  },
+  jp: {
+    menuAbout: "プロフィール", menuPhoto: "写真", menuWorks: "実績",
+    heroEyebrow: "ウルトラマンコスモス × ポートフォリオ",
+    heroJp: "バンヤポン · クリエイター",
+    heroTagline: "コスモス · ルナモード",
+    heroScroll: "スクロール",
+    titleAbout: "プロフィール",
+    aboutBio: "<h3>こんにちは！</h3><p>バンヤポンです。開発とコーディングが大好きで、ウェブ開発、システム構築、ゲーム開発に興味を持っています。プログラミングを通じて新しいものを創造し、常に最新のテクノロジーを学ぶことに楽しさを感じています。</p><br><p>また、写真撮影も趣味で、カメラを通して様々な雰囲気や視点を切り取るのが好きです。仮面ライダーやウルトラマンのフィギュア収集家でもあり、それが私のデザインと創造性のインスピレーションの源になっています。</p><br><span class='tag'>ゲーム開発</span><span class='tag'>コーディング</span><span class='tag'>ウェブ開発</span><span class='tag'>写真撮影</span><span class='tag'>仮面ライダー</span><span class='tag'>ウルトラマン</span>",
+    cardCoding: "ウェブ開発、プログラミング、新しい技術の学習に情熱を注いでいます。バックエンド、フロントエンド、そして実用的なシステム構築に関心があります。",
+    cardGame: "ゲーム開発やゲーム内システムに興味があります。ゲームメカニクス、UI、プレイヤー体験（UX）のデザインを研究するのが好きです。",
+    cardPhoto: "写真撮影と仮面ライダー・ウルトラマンのフィギュア収集が趣味です。特撮キャラクターのデザインやディテールに惹かれています。",
+    replaceText: "あなたの写真に置き換えてください",
+    photoInst: "💡 .gallery-placeholder を &lt;img src=\"path/to/photo.jpg\"&gt; に置き換えてください",
+    loadingGit: "⟨ ギットハブのデータを読み込み中... ⟩",
+    noRepo: "⟨ リポジトリが見つかりません ⟩",
+    failRepo: "⟨ 読み込み失敗 · 接続を確認してください ⟩",
+    gameControls: "SPACE / TAP = ジャンプ",
+    gameStatusStart: "スペースキーでスタート",
+    gameStatusFight: "戦え！",
+    gameStatusOver: "ゲームオーバー",
+    gameTextStart: "スペースまたはタップでスタート",
+    gameTextOver: "ゲームオーバー · タップでリトライ",
+    speechBubble: ["今日はどんな一日ですか？ 😊", "何かお手伝いしましょうか？", "ファイト！Fight on!", "変身！HENSHIN! ⚡", "僕の作品を見てね！", "シュワッチ！Shuwatch!", "写真は好きですか？ 📷", "いくぞ！ライダーキック！ 🦶"]
+  }
+};
+
+let currentLang = 'th';
+let dialogs = translations[currentLang].speechBubble;
+
+function switchLang(lang) {
+  currentLang = lang;
+  dialogs = translations[lang].speechBubble;
   
-  if (lang === 'th') {
-    thElements.forEach(el => el.style.display = 'block');
-    enElements.forEach(el => el.style.display = 'none');
+  // Update Active Button Style
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if(btn.textContent.toLowerCase() === lang) btn.classList.add('active');
+  });
+
+  // Translate Header & Hero
+  document.getElementById('menu-about').textContent = translations[lang].menuAbout;
+  document.getElementById('menu-photo').textContent = translations[lang].menuPhoto;
+  document.getElementById('menu-works').textContent = translations[lang].menuWorks;
+  document.getElementById('hero-eyebrow').textContent = translations[lang].heroEyebrow;
+  document.getElementById('hero-jp').textContent = translations[lang].heroJp;
+  document.getElementById('hero-tagline').textContent = translations[lang].heroTagline;
+  document.getElementById('hero-scroll-text').textContent = translations[lang].heroScroll;
+
+  // Translate About Section
+  document.getElementById('title-about').textContent = translations[lang].titleAbout;
+  document.getElementById('about-bio-content').innerHTML = translations[lang].aboutBio;
+  document.getElementById('card-coding-text').textContent = translations[lang].cardCoding;
+  document.getElementById('card-game-text').textContent = translations[lang].cardGame;
+  document.getElementById('card-photo-text').textContent = translations[lang].cardPhoto;
+
+  // Translate Photo Section
+  document.querySelectorAll('.replace-text').forEach(el => el.textContent = translations[lang].replaceText);
+  document.getElementById('photo-instruction').innerHTML = translations[lang].photoInst;
+
+  // Translate Game text elements
+  document.getElementById('game-controls').textContent = translations[lang].gameControls;
+  if (!gameStarted) {
+    document.getElementById('game-status').textContent = translations[lang].gameStatusStart;
+  } else if (gameRunning) {
+    document.getElementById('game-status').textContent = translations[lang].gameStatusFight;
   } else {
-    thElements.forEach(el => el.style.display = 'none');
-    enElements.forEach(el => el.style.display = 'block');
+    document.getElementById('game-status').textContent = translations[lang].gameStatusOver;
   }
 
-  // Update active state on buttons
-  const buttons = document.querySelectorAll('.lang-btn');
-  buttons.forEach(btn => btn.classList.remove('active'));
-  if (event && event.target) {
-    event.target.classList.add('active');
-  }
+  // Reload GitHub Projects with the new language setting for placeholders
+  loadGitHubProjects();
 }
 
 // ─── CURSOR ───────────────────────────────────────────
@@ -1103,52 +1160,49 @@ const langColors = {
   Java: '#b07219', 'C++': '#f34b7d', PHP: '#4F5D95', default: '#378ADD'
 };
 
-fetch('https://api.github.com/users/Banyaphon011/repos?sort=updated&per_page=12')
-  .then(r => r.json())
-  .then(repos => {
-    const grid = document.getElementById('projects-grid');
-    if (!repos || !repos.length) {
-      grid.innerHTML = '<div class="projects-loading">⟨ NO REPOS FOUND ⟩</div>'; return;
-    }
-    grid.innerHTML = repos.map(repo => {
-      const lang = repo.language || 'Code';
-      const color = langColors[lang] || langColors.default;
-      const desc = repo.description || 'No description provided.';
-      return `
-        <div class="project-card">
-          <div class="project-card-top">
-            <div class="project-name">${repo.name}</div>
-            <div class="project-stars">★ ${repo.stargazers_count}</div>
-          </div>
-          <div class="project-desc">${desc.substring(0, 80)}${desc.length > 80 ? '...' : ''}</div>
-          <div class="project-footer">
-            <span class="lang-badge" style="border-color:${color}40;color:${color}">
-              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${color};margin-right:6px;vertical-align:middle"></span>
-              ${lang}
-            </span>
-            <a class="project-link" href="${repo.html_url}" target="_blank">VIEW →</a>
-          </div>
-        </div>`;
-    }).join('');
-  })
-  .catch(() => {
-    document.getElementById('projects-grid').innerHTML = `
-      <div class="projects-loading">⟨ FAILED TO LOAD · CHECK CONNECTION ⟩</div>`;
-  });
+function loadGitHubProjects() {
+  const grid = document.getElementById('projects-grid');
+  // Only show the placeholder loading if it hasn't been successfully filled yet
+  if (grid.querySelector('.projects-loading')) {
+    grid.innerHTML = `<div class="projects-loading">${translations[currentLang].loadingGit}</div>`;
+  }
+
+  fetch('https://api.github.com/users/Banyaphon011/repos?sort=updated&per_page=12')
+    .then(r => r.json())
+    .then(repos => {
+      if (!repos || !repos.length) {
+        grid.innerHTML = `<div class="projects-loading">${translations[currentLang].noRepo}</div>`; return;
+      }
+      grid.innerHTML = repos.map(repo => {
+        const lang = repo.language || 'Code';
+        const color = langColors[lang] || langColors.default;
+        const desc = repo.description || 'No description provided.';
+        return `
+          <div class="project-card">
+            <div class="project-card-top">
+              <div class="project-name">${repo.name}</div>
+              <div class="project-stars">★ ${repo.stargazers_count}</div>
+            </div>
+            <div class="project-desc">${desc.substring(0, 80)}${desc.length > 80 ? '...' : ''}</div>
+            <div class="project-footer">
+              <span class="lang-badge" style="border-color:${color}40;color:${color}">
+                <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${color};margin-right:6px;vertical-align:middle"></span>
+                ${lang}
+              </span>
+              <a class="project-link" href="${repo.html_url}" target="_blank">VIEW →</a>
+            </div>
+          </div>`;
+      }).join('');
+    })
+    .catch(() => {
+      grid.innerHTML = `<div class="projects-loading">${translations[currentLang].failRepo}</div>`;
+    });
+}
+loadGitHubProjects();
 
 // ─── MASCOT ───────────────────────────────────────────
 const mascotWrap = document.getElementById('mascot-wrap');
 const speechBubble = document.getElementById('speech-bubble');
-const dialogs = [
-  'วันนี้เป็นอย่างไรบ้าง? 😊',
-  'อยากให้ช่วยอะไรไหม?',
-  'ファイト！Fight on!',
-  'HENSHIN! 変身！⚡',
-  'ดูผลงานของผมด้วยนะ!',
-  'シュワッチ！Shuwatch!',
-  'คุณถ่ายรูปสวยไหม? 📷',
-  'Let\'s go, Rider Kick! 🦶'
-];
 let dialogIdx = 0;
 let mascotX = 80;
 let mascotDir = 1;
@@ -1216,7 +1270,11 @@ gameToggle.addEventListener('click', () => {
 });
 
 function jump() {
-  if (!gameStarted) { gameStarted = true; gameRunning = true; document.getElementById('game-status').textContent = 'FIGHTING!'; }
+  if (!gameStarted) { 
+    gameStarted = true; 
+    gameRunning = true; 
+    document.getElementById('game-status').textContent = translations[currentLang].gameStatusFight; 
+  }
   if (player.onGround) { player.vy = JUMP_V; player.onGround = false; }
 }
 
@@ -1251,7 +1309,7 @@ function drawGame() {
     gc.fillStyle = 'rgba(55,138,221,0.8)';
     gc.font = '11px "Share Tech Mono"';
     gc.textAlign = 'center';
-    gc.fillText('PRESS SPACE / TAP TO START', GW/2, GH/2);
+    gc.fillText(translations[currentLang].gameTextStart, GW/2, GH/2);
     gc.textAlign = 'left';
     drawPlayer();
     requestAnimationFrame(drawGame);
@@ -1262,7 +1320,7 @@ function drawGame() {
     gc.fillStyle = '#E24B4A';
     gc.font = 'bold 14px "Share Tech Mono"';
     gc.textAlign = 'center';
-    gc.fillText('GAME OVER · TAP TO RETRY', GW/2, GH/2 - 10);
+    gc.fillText(translations[currentLang].gameTextOver, GW/2, GH/2 - 10);
     gc.fillStyle = '#378ADD';
     gc.font = '11px "Share Tech Mono"';
     gc.fillText('SCORE: ' + gameScore, GW/2, GH/2 + 10);
@@ -1290,7 +1348,7 @@ function drawGame() {
     if (player.x + player.w - 4 > ob.x && player.x + 4 < ob.x + ob.w &&
         player.y + player.h - 4 > ob.y && player.y + 4 < ob.y + ob.h) {
       gameRunning = false;
-      document.getElementById('game-status').textContent = 'GAME OVER';
+      document.getElementById('game-status').textContent = translations[currentLang].gameStatusOver;
       document.getElementById('game-canvas').addEventListener('click', retryGame, { once: true });
       break;
     }
@@ -1352,7 +1410,7 @@ function retryGame() {
   player.vy = 0;
   player.onGround = true;
   gameRunning = true;
-  document.getElementById('game-status').textContent = 'FIGHTING!';
+  document.getElementById('game-status').textContent = translations[currentLang].gameStatusFight;
 }
 
 drawGame();
