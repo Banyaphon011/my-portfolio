@@ -83,6 +83,7 @@ nav {
   color: var(--white);
 }
 .nav-logo span { color: var(--red); }
+.nav-right { display: flex; align-items: center; gap: 32px; }
 .nav-links { display: flex; gap: 32px; list-style: none; }
 .nav-links a {
   font-family: 'Share Tech Mono', monospace;
@@ -104,6 +105,32 @@ nav {
 }
 .nav-links a:hover { color: var(--white); }
 .nav-links a:hover::after { transform: scaleX(1); }
+
+/* LANGUAGE SWITCHER */
+.lang-switcher {
+  display: flex;
+  gap: 8px;
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 2px;
+  background: rgba(4, 8, 15, 0.6);
+}
+.lang-btn {
+  background: none;
+  border: none;
+  color: var(--gray);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: all 0.3s;
+}
+.lang-btn:hover { color: var(--white); }
+.lang-btn.active {
+  color: var(--dark);
+  background: var(--red);
+  font-weight: bold;
+}
 
 /* JP FRAME MIXIN */
 .jp-frame {
@@ -245,6 +272,7 @@ section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+  margin-top: 24px;
 }
 .about-card {
   background: var(--card-bg);
@@ -284,7 +312,6 @@ section {
 }
 .about-card-text { font-size: 14px; color: var(--gray); line-height: 1.8; }
 .about-main {
-  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 32px;
@@ -316,6 +343,9 @@ section {
   color: var(--white);
   letter-spacing: 2px;
   margin-bottom: 12px;
+}
+.about-bio p {
+  white-space: pre-line;
 }
 .about-bio .tag {
   display: inline-block;
@@ -647,7 +677,8 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  nav { padding: 12px 20px; }
+  nav { padding: 12px 20px; flex-direction: column; gap: 12px; align-items: center; }
+  .nav-right { gap: 16px; }
   .nav-links { gap: 16px; }
   .nav-links a { font-size: 10px; letter-spacing: 1px; }
   section { padding: 80px 20px; }
@@ -662,7 +693,6 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
 </head>
 <body>
 
-<!-- CURSOR -->
 <div id="cursor">
   <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="16" cy="16" r="14" stroke="#E24B4A" stroke-width="0.5" opacity="0.6"/>
@@ -675,22 +705,25 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
 </div>
 <div id="cursor-dot"></div>
 
-<!-- CANVAS BACKGROUND -->
 <canvas id="bg-canvas"></canvas>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo">BANYA<span>P</span>HON</div>
-  <ul class="nav-links">
-    <li><a href="#about">ABOUT</a></li>
-    <li><a href="#photo">PHOTO</a></li>
-    <li><a href="#projects">WORKS</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about" id="nav-about">ABOUT</a></li>
+      <li><a href="#photo" id="nav-photo">PHOTO</a></li>
+      <li><a href="#projects" id="nav-works">WORKS</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="switchLang('th')">TH</button>
+      <button class="lang-btn" onclick="switchLang('en')">EN</button>
+      <button class="lang-btn" onclick="switchLang('jp')">JP</button>
+    </div>
+  </div>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
-  <!-- Ultraman Cosmos (Luna Mode) - detailed SVG -->
   <svg class="hero-mascot" viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id="bodyGrad" cx="50%" cy="40%" r="60%">
@@ -702,141 +735,131 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
         <stop offset="100%" stop-color="#5ec8f5"/>
       </radialGradient>
     </defs>
-    <!-- Glow aura -->
     <ellipse cx="60" cy="80" rx="44" ry="70" fill="#5ec8f5" opacity="0.04"/>
-    <!-- HEAD -->
     <ellipse cx="60" cy="30" rx="23" ry="26" fill="url(#bodyGrad)" stroke="#a8e4ff" stroke-width="0.8"/>
-    <!-- Silver forehead plate -->
     <ellipse cx="60" cy="18" rx="14" ry="6" fill="#ddf2ff" opacity="0.7"/>
-    <!-- Head crest / fin -->
     <polygon points="60,4 52,14 68,14" fill="#5ec8f5" opacity="0.9"/>
     <polygon points="60,6 55,14 65,14" fill="#c8eeff" opacity="0.6"/>
-    <!-- EYES - Cosmos wide visor style -->
     <ellipse cx="44" cy="26" rx="11" ry="6" fill="#0a1a2e" stroke="#5ec8f5" stroke-width="0.8"/>
     <ellipse cx="76" cy="26" rx="11" ry="6" fill="#0a1a2e" stroke="#5ec8f5" stroke-width="0.8"/>
     <ellipse cx="44" cy="26" rx="8" ry="4" fill="url(#eyeGrad)" opacity="0.9"/>
     <ellipse cx="76" cy="26" rx="8" ry="4" fill="url(#eyeGrad)" opacity="0.9"/>
-    <!-- Eye shine -->
     <ellipse cx="40" cy="24" rx="2" ry="1.5" fill="white" opacity="0.8"/>
     <ellipse cx="72" cy="24" rx="2" ry="1.5" fill="white" opacity="0.8"/>
-    <!-- Mouth/chin line -->
     <path d="M50 38 Q60 42 70 38" stroke="#5ec8f5" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <!-- NECK -->
     <rect x="52" y="53" width="16" height="8" rx="2" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.5"/>
-    <!-- Color timer ring (blue for Cosmos) -->
     <ellipse cx="60" cy="90" rx="7" ry="8" fill="none" stroke="#5ec8f5" stroke-width="1.5"/>
     <ellipse cx="60" cy="90" rx="4" ry="5" fill="#5ec8f5" opacity="0.7"/>
-    <!-- BODY -->
     <path d="M30 62 Q20 68 22 100 L40 105 L40 62 Z" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.6"/>
     <path d="M90 62 Q100 68 98 100 L80 105 L80 62 Z" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.6"/>
     <rect x="36" y="58" width="48" height="52" rx="5" fill="url(#bodyGrad)" stroke="#a8e4ff" stroke-width="0.8"/>
-    <!-- Chest pattern - Cosmos diamond -->
     <polygon points="60,66 68,76 60,86 52,76" fill="none" stroke="#5ec8f5" stroke-width="1.2" opacity="0.8"/>
     <polygon points="60,70 65,76 60,82 55,76" fill="#5ec8f5" opacity="0.4"/>
-    <!-- Belly lines -->
     <line x1="42" y1="97" x2="78" y2="97" stroke="#5ec8f5" stroke-width="0.5" opacity="0.4"/>
     <line x1="42" y1="101" x2="78" y2="101" stroke="#5ec8f5" stroke-width="0.5" opacity="0.3"/>
-    <!-- Blue stripe sides -->
     <rect x="36" y="60" width="6" height="48" rx="2" fill="#5ec8f5" opacity="0.25"/>
     <rect x="78" y="60" width="6" height="48" rx="2" fill="#5ec8f5" opacity="0.25"/>
-    <!-- ARMS -->
     <rect x="18" y="60" width="12" height="38" rx="5" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.8"/>
     <ellipse cx="24" cy="100" rx="7" ry="5" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.6"/>
     <rect x="82" y="60" width="12" height="38" rx="5" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.8"/>
     <ellipse cx="88" cy="100" rx="7" ry="5" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.6"/>
-    <!-- Arm blue bands -->
     <rect x="18" y="72" width="12" height="4" rx="1" fill="#5ec8f5" opacity="0.5"/>
     <rect x="82" y="72" width="12" height="4" rx="1" fill="#5ec8f5" opacity="0.5"/>
-    <!-- LEGS -->
     <rect x="42" y="110" width="14" height="40" rx="5" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.8" id="h-leg-l"/>
     <rect x="64" y="110" width="14" height="40" rx="5" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.8" id="h-leg-r"/>
-    <!-- Knee plates -->
     <ellipse cx="49" cy="118" rx="6" ry="4" fill="#5ec8f5" opacity="0.4"/>
     <ellipse cx="71" cy="118" rx="6" ry="4" fill="#5ec8f5" opacity="0.4"/>
-    <!-- Feet -->
     <ellipse cx="49" cy="150" rx="8" ry="4" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.6"/>
     <ellipse cx="71" cy="150" rx="8" ry="4" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.6"/>
   </svg>
 
-  <div class="hero-eyebrow">ウルトラマンコスモス × ポートフォリオ</div>
+  <div class="hero-eyebrow" id="hero-eyebrow">ウルトラマンコスモス × ポートフォリオ</div>
   <h1 class="hero-name">BANYAPHON</h1>
-  <div class="hero-jp">บัญญพนธ์ · バンヤポン · CREATOR</div>
+  <div class="hero-jp" id="hero-jp">บัญญพนธ์ · バンヤポン · CREATOR</div>
   <div class="hero-tagline">コスモス · COSMOS · LUNA MODE</div>
   <div class="hero-scroll">
-    <span>SCROLL</span>
+    <span id="hero-scroll-text">SCROLL</span>
     <div class="hero-scroll-line"></div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<div class="about-main about-card reveal">
-  <div class="about-avatar">💻</div>
-  <div class="about-bio">
-    <h3>สวัสดีครับ! こんにちは！</h3>
-    <p>
-      ผมชื่อบัญญพนธ์ เป็นคนที่ชื่นชอบการพัฒนาและเขียนโค้ด 
-      สนใจทั้งการพัฒนาเว็บไซต์ ระบบต่าง ๆ และการพัฒนาเกม 
-      ผมสนุกกับการสร้างสิ่งใหม่ ๆ ผ่านการเขียนโปรแกรมและเรียนรู้เทคโนโลยีใหม่อยู่เสมอ
-    </p>
-    <br>
-    <p>
-      นอกจากนี้ยังชอบการถ่ายภาพ ชอบเก็บบรรยากาศและมุมมองต่าง ๆ ผ่านกล้อง 
-      และเป็นคนที่ชื่นชอบสะสมโมเดล Kamen Rider และ Ultraman 
-      ซึ่งเป็นแรงบันดาลใจด้านดีไซน์และความคิดสร้างสรรค์ของผมอีกด้วย
-    </p>
-    <br>
-
-    <span class="tag">GAME DEVELOPMENT</span>
-    <span class="tag">CODING</span>
-    <span class="tag">WEB DEVELOPMENT</span>
-    <span class="tag">PHOTOGRAPHY</span>
-    <span class="tag">KAMEN RIDER</span>
-    <span class="tag">ULTRAMAN</span>
+<section id="about-section" style="max-width:1100px; margin:0 auto; padding: 0 40px;">
+  <div class="sec-header reveal">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title" id="about-title">ABOUT ME</h2>
+    <div class="sec-line"></div>
+    <span class="sec-jp">私について</span>
   </div>
-</div>
 
-<div class="about-card reveal" style="transition-delay:0.1s">
-  <div class="about-card-icon">💻</div>
-  <div class="about-card-title">CODING</div>
-  <div class="about-card-text">
-    ชื่นชอบการพัฒนาเว็บไซต์ เขียนโปรแกรม และเรียนรู้เทคโนโลยีใหม่ ๆ 
-    สนใจทั้ง Backend, Frontend และการสร้างระบบที่ใช้งานได้จริง
+  <div class="about-main about-card reveal">
+    <div class="about-avatar">💻</div>
+    <div class="about-bio">
+      <h3 id="about-greeting">สวัสดีครับ! こんにちは！</h3>
+      <p id="about-bio-p1">
+        ผมชื่อบัญญพนธ์ เป็นคนที่ชื่นชอบการพัฒนาและเขียนโค้ด 
+        สนใจทั้งการพัฒนาเว็บไซต์ ระบบต่าง ๆ และการพัฒนาเกม 
+        ผมสนุกกับการสร้างสิ่งใหม่ ๆ ผ่านการเขียนโปรแกรมและเรียนรู้เทคโนโลยีใหมอยู่เสมอ
+      </p>
+      <br>
+      <p id="about-bio-p2">
+        นอกจากนี้ยังชอบการถ่ายภาพ ชอบเก็บบรรยากาศและมุมมองต่าง ๆ ผ่านกล้อง 
+        และเป็นคนที่ชื่นชอบสะสมโมเดล Kamen Rider และ Ultraman 
+        ซึ่งเป็นแรงบันดาลใจด้านดีไซน์และความคิดสร้างสรรค์ของผมอีกด้วย
+      </p>
+      <br>
+
+      <span class="tag">GAME DEVELOPMENT</span>
+      <span class="tag">CODING</span>
+      <span class="tag">WEB DEVELOPMENT</span>
+      <span class="tag">PHOTOGRAPHY</span>
+      <span class="tag">KAMEN RIDER</span>
+      <span class="tag">ULTRAMAN</span>
+    </div>
   </div>
-</div>
 
-<div class="about-card reveal" style="transition-delay:0.2s">
-  <div class="about-card-icon">🎮</div>
-  <div class="about-card-title">GAME DEVELOPMENT</div>
-  <div class="about-card-text">
-    สนใจด้านการพัฒนาเกมและระบบต่าง ๆ ภายในเกม 
-    ชอบศึกษา game mechanics, UI และการออกแบบประสบการณ์ของผู้เล่น
+  <div class="about-grid">
+    <div class="about-card reveal" style="transition-delay:0.1s">
+      <div class="about-card-icon">💻</div>
+      <div class="about-card-title">CODING</div>
+      <div class="about-card-text" id="card-coding-text">
+        ชื่นชอบการพัฒนาเว็บไซต์ เขียนโปรแกรม และเรียนรู้เทคโนโลยีใหม่ ๆ 
+        สนใจทั้ง Backend, Frontend และการสร้างระบบที่ใช้งานได้จริง
+      </div>
+    </div>
+
+    <div class="about-card reveal" style="transition-delay:0.2s">
+      <div class="about-card-icon">🎮</div>
+      <div class="about-card-title">GAME DEVELOPMENT</div>
+      <div class="about-card-text" id="card-game-text">
+        สนใจด้านการพัฒนาเกมและระบบต่าง ๆ ภายในเกม 
+        ชอบศึกษา game mechanics, UI และการออกแบบประสบการณ์ของผู้เล่น
+      </div>
+    </div>
+
+    <div class="about-card reveal" style="transition-delay:0.3s">
+      <div class="about-card-icon">📷</div>
+      <div class="about-card-title">PHOTOGRAPHY & FIGURES</div>
+      <div class="about-card-text" id="card-photo-text">
+        ชื่นชอบการถ่ายภาพและสะสมโมเดล Kamen Rider กับ Ultraman 
+        สนใจงานออกแบบ คาแรกเตอร์ และรายละเอียดของตัวละคร Tokusatsu
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-<div class="about-card reveal" style="transition-delay:0.3s">
-  <div class="about-card-icon">📷</div>
-  <div class="about-card-title">PHOTOGRAPHY & FIGURES</div>
-  <div class="about-card-text">
-    ชื่นชอบการถ่ายภาพและสะสมโมเดล Kamen Rider กับ Ultraman 
-    สนใจงานออกแบบ คาแรกเตอร์ และรายละเอียดของตัวละคร Tokusatsu
-  </div>
-</div>
-
-<!-- PHOTOGRAPHY -->
 <section id="photo">
   <div class="sec-header reveal">
     <span class="sec-num">02</span>
-    <h2 class="sec-title">PHOTOGRAPHY</h2>
+    <h2 class="sec-title" id="photo-sec-title">PHOTOGRAPHY</h2>
     <div class="sec-line"></div>
     <span class="sec-jp">写真</span>
   </div>
   <div class="gallery-grid reveal">
-    <!-- Replace src="" with your actual photo paths e.g. src="photos/photo1.jpg" -->
     <div class="gallery-item" data-caption="PHOTO 01">
       <div class="gallery-placeholder">
         <div class="ph-icon">📷</div>
         <span>PHOTO 01</span>
-        <span style="font-size:9px;opacity:0.6">แทนที่ด้วยรูปของคุณ</span>
+        <span class="ph-sub" style="font-size:9px;opacity:0.6">แทนที่ด้วยรูปของคุณ</span>
       </div>
       <div class="gallery-overlay"><span>PHOTO 01</span></div>
     </div>
@@ -861,36 +884,33 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
       <div class="gallery-overlay"><span>PHOTO 06</span></div>
     </div>
   </div>
-  <p style="margin-top:16px; font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--gray); text-align:center;">
+  <p id="gallery-tip" style="margin-top:16px; font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--gray); text-align:center;">
     💡 แทนที่ .gallery-placeholder ด้วย &lt;img src="path/to/photo.jpg"&gt;
   </p>
 </section>
 
-<!-- LIGHTBOX -->
 <div id="lightbox">
   <img id="lightbox-img" src="" alt="">
   <button id="lightbox-close">[ CLOSE ]</button>
 </div>
 
-<!-- PROJECTS -->
 <section id="projects">
   <div class="sec-header reveal">
     <span class="sec-num">03</span>
-    <h2 class="sec-title">PROJECTS</h2>
+    <h2 class="sec-title" id="projects-sec-title">PROJECTS</h2>
     <div class="sec-line"></div>
     <span class="sec-jp">プロジェクト</span>
   </div>
   <div id="projects-grid" class="projects-grid reveal">
-    <div class="projects-loading">⟨ LOADING GITHUB DATA... ⟩</div>
+    <div class="projects-loading" id="projects-loading">⟨ LOADING GITHUB DATA... ⟩</div>
   </div>
 </section>
 
 <footer>
   <div class="footer-jp">ウルトラマンコスモス</div>
-  <p>© 2025 BANYAPHON · บัญญพนธ์ · コスモス · FIGHT ON!</p>
+  <p id="footer-credits">© 2025 BANYAPHON · บัญญพนธ์ · コスモス · FIGHT ON!</p>
 </footer>
 
-<!-- MASCOT + GAME -->
 <div id="mascot-zone">
   <div id="mascot-wrap">
     <div id="speech-bubble">วันนี้เป็นอย่างไรบ้าง? 😊</div>
@@ -901,39 +921,28 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
           <stop offset="100%" stop-color="#1a4a6e"/>
         </radialGradient>
       </defs>
-      <!-- head -->
       <ellipse cx="28" cy="13" rx="12" ry="13" fill="url(#mbg)" stroke="#a8e4ff" stroke-width="0.8"/>
-      <!-- crest -->
       <polygon points="28,3 23,10 33,10" fill="#5ec8f5" opacity="0.9"/>
-      <!-- eyes -->
       <ellipse cx="19" cy="12" rx="6" ry="4" fill="#061828" stroke="#5ec8f5" stroke-width="0.6"/>
       <ellipse cx="37" cy="12" rx="6" ry="4" fill="#061828" stroke="#5ec8f5" stroke-width="0.6"/>
       <ellipse cx="19" cy="12" rx="4" ry="2.5" fill="#5ec8f5" opacity="0.9"/>
       <ellipse cx="37" cy="12" rx="4" ry="2.5" fill="#5ec8f5" opacity="0.9"/>
       <ellipse cx="17" cy="11" rx="1.2" ry="1" fill="white" opacity="0.8"/>
       <ellipse cx="35" cy="11" rx="1.2" ry="1" fill="white" opacity="0.8"/>
-      <!-- neck -->
       <rect x="22" y="24" width="12" height="5" rx="1" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.4"/>
-      <!-- body -->
       <rect x="16" y="28" width="24" height="24" rx="3" fill="url(#mbg)" stroke="#a8e4ff" stroke-width="0.7"/>
-      <!-- chest diamond -->
       <polygon points="28,32 33,38 28,44 23,38" fill="none" stroke="#5ec8f5" stroke-width="1" opacity="0.8"/>
       <polygon points="28,35 31,38 28,41 25,38" fill="#5ec8f5" opacity="0.5"/>
-      <!-- color timer -->
       <ellipse cx="28" cy="38" rx="3.5" ry="4" fill="none" stroke="#5ec8f5" stroke-width="1.2"/>
       <ellipse cx="28" cy="38" rx="1.8" ry="2.2" fill="#5ec8f5" opacity="0.7"/>
-      <!-- side stripes -->
       <rect x="16" y="29" width="3" height="22" rx="1" fill="#5ec8f5" opacity="0.3"/>
       <rect x="37" y="29" width="3" height="22" rx="1" fill="#5ec8f5" opacity="0.3"/>
-      <!-- arms -->
       <rect x="8" y="28" width="7" height="18" rx="3" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.6"/>
       <rect x="41" y="28" width="7" height="18" rx="3" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.6"/>
       <rect x="8" y="34" width="7" height="2" rx="1" fill="#5ec8f5" opacity="0.5"/>
       <rect x="41" y="34" width="7" height="2" rx="1" fill="#5ec8f5" opacity="0.5"/>
-      <!-- legs -->
       <rect x="20" y="52" width="8" height="16" rx="3" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.7" id="leg-l"/>
       <rect x="28" y="52" width="8" height="16" rx="3" fill="#1a3a5e" stroke="#5ec8f5" stroke-width="0.7" id="leg-r"/>
-      <!-- knee -->
       <ellipse cx="24" cy="55" rx="3.5" ry="2.5" fill="#5ec8f5" opacity="0.35"/>
       <ellipse cx="32" cy="55" rx="3.5" ry="2.5" fill="#5ec8f5" opacity="0.35"/>
     </svg>
@@ -948,12 +957,166 @@ footer p { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-sp
   </div>
   <canvas id="game-canvas" width="380" height="140"></canvas>
   <div id="game-info">
-    <span>SPACE / TAP = JUMP</span>
+    <span id="game-controls">SPACE / TAP = JUMP</span>
     <span id="game-status">PRESS SPACE TO START</span>
   </div>
 </div>
 
 <script>
+// ─── TRANSLATION DATA ─────────────────────────────────
+const translations = {
+  th: {
+    navAbout: "ABOUT", navPhoto: "PHOTO", navWorks: "WORKS",
+    heroEyebrow: "ウルトラマンコスモス × ポートフォリオ",
+    heroJp: "บัญญพนธ์ · บันยポン · CREATOR",
+    heroScroll: "SCROLL",
+    aboutTitle: "ABOUT ME",
+    aboutGreeting: "สวัสดีครับ! こんにちは！",
+    aboutBioP1: "ผมชื่อบัญญพนธ์ เป็นคนที่ชื่นชอบการพัฒนาและเขียนโค้ด สนใจทั้งการพัฒนาเว็บไซต์ ระบบต่าง ๆ และการพัฒนาเกม ผมสนุกกับการสร้างสิ่งใหม่ ๆ ผ่านการเขียนโปรแกรมและเรียนรู้เทคโนโลยีใหม่อยู่เสมอ",
+    aboutBioP2: "นอกจากนี้ยังชอบการถ่ายภาพ ชอบเก็บบรรยากาศและมุมมองต่าง ๆ ผ่านกล้อง และเป็นคนที่ชื่นชอบสะสมโมเดล Kamen Rider และ Ultraman ซึ่งเป็นแรงบันดาลใจด้านดีไซน์และความคิดสร้างสรรค์ของผมอีกด้วย",
+    cardCoding: "ชื่นชอบการพัฒนาเว็บไซต์ เขียนโปรแกรม และเรียนรู้เทคโนโลยีใหม่ ๆ สนใจทั้ง Backend, Frontend และการสร้างระบบที่ใช้งานได้จริง",
+    cardGame: "สนใจด้านการพัฒนาเกมและระบบต่าง ๆ ภายในเกม ชอบศึกษา game mechanics, UI และการออกแบบประสบการณ์ของผู้เล่น",
+    cardPhoto: "ชื่นชอบการถ่ายภาพและสะสมโมเดล Kamen Rider กับ Ultraman สนใจงานออกแบบ คาแรกเตอร์ และรายละเอียดของตัวละคร Tokusatsu",
+    photoTitle: "PHOTOGRAPHY",
+    photoSub: "แทนที่ด้วยรูปของคุณ",
+    galleryTip: "💡 แทนที่ .gallery-placeholder ด้วย &lt;img src=\"path/to/photo.jpg\"&gt;",
+    projectsTitle: "PROJECTS",
+    projectsLoading: "⟨ กำลังโหลดข้อมูล GITHUB... ⟩",
+    projectsNoFound: "⟨ ไม่พบสาธารณะโปรเจกต์ ⟩",
+    projectsFail: "⟨ โหลดข้อมูลล้มเหลว · ตรวจสอบการเชื่อมต่อ ⟩",
+    footerCredits: "© 2025 BANYAPHON · บัญญพนธ์ · コスモス · FIGHT ON!",
+    gameControls: "SPACE / TAP = กระโดด",
+    gameStart: "กด SPACE เพื่อเริ่มเกม",
+    gameFighting: "สู้เขา! FIGHTING!",
+    gameOver: "จบเกม · แตะเพื่อเล่นใหม่",
+    mascotDialogs: [
+      'วันนี้เป็นอย่างไรบ้าง? 😊', 'อยากให้ช่วยอะไรไหม?', 'ファイト！Fight on!',
+      'HENSHIN! 変身！⚡', 'ดูผลงานของผมด้วยนะ!', 'シュワッチ！Shuwatch!',
+      'คุณถ่ายรูปสวยไหม? 📷', 'Let\'s go, Rider Kick! 🦶'
+    ]
+  },
+  en: {
+    navAbout: "ABOUT", navPhoto: "PHOTO", navWorks: "WORKS",
+    heroEyebrow: "ULTRAMAN COSMOS × PORTFOLIO",
+    heroJp: "BANYAPHON · CREATOR",
+    heroScroll: "SCROLL",
+    aboutTitle: "ABOUT ME",
+    aboutGreeting: "Hello! Welcome to my space.",
+    aboutBioP1: "My name is Banyaphon. I am a tech enthusiast who loves coding and development. I specialize in web development, system architecture, and game design, always eager to learn new technologies.",
+    aboutBioP2: "Besides programming, I enjoy capturing moments through photography and collecting Kamen Rider and Ultraman figures. These hobbies constantly fuel my design inspiration and creativity.",
+    cardCoding: "Passionate about web development, coding, and exploring new tech stacks. Interested in Frontend, Backend, and building practical software solutions.",
+    cardGame: "Deeply interested in game development and programming. Love studying game mechanics, user interfaces, and player experiences.",
+    cardPhoto: "Enjoy street photography and collecting Tokusatsu figures. Fascinated by character design, aesthetics, and conceptual art.",
+    photoTitle: "PHOTOGRAPHY",
+    photoSub: "Replace with your photo",
+    galleryTip: "💡 Replace .gallery-placeholder with &lt;img src=\"path/to/photo.jpg\"&gt;",
+    projectsTitle: "PROJECTS",
+    projectsLoading: "⟨ LOADING GITHUB DATA... ⟩",
+    projectsNoFound: "⟨ NO REPOS FOUND ⟩",
+    projectsFail: "⟨ FAILED TO LOAD · CHECK CONNECTION ⟩",
+    footerCredits: "© 2025 BANYAPHON · COSMOS · LUNA MODE · FIGHT ON!",
+    gameControls: "SPACE / TAP = JUMP",
+    gameStart: "PRESS SPACE TO START",
+    gameFighting: "FIGHTING!",
+    gameOver: "GAME OVER · TAP TO RETRY",
+    mascotDialogs: [
+      'How are you today? 😊', 'Need any help?', 'ファイト！Fight on!',
+      'HENSHIN! Change! ⚡', 'Check out my works!', 'Shuwatch! 🌌',
+      'Do you like taking photos? 📷', 'Let\'s go, Rider Kick! 🦶'
+    ]
+  },
+  jp: {
+    navAbout: "プロフィール", navPhoto: "写真", navWorks: "実績",
+    heroEyebrow: "ウルトラマンコスモス × ポートフォリオ",
+    heroJp: "バンヤポン · クリエイター · CREATOR",
+    heroScroll: "スクロール",
+    aboutTitle: "私について",
+    aboutGreeting: "こんにちは！はじめまして。",
+    aboutBioP1: "バンヤポンと申します。プログラミングと開発が大好きなクリエイターです。ウェブ開発、システム構築、そしてゲーム制作に興味があり、常に新しい技術に挑戦しています。",
+    aboutBioP2: "開発以外では、カメラでの写真撮影や、仮面ライダー・ウルトラマンのフィギュア収集が趣味です。特撮の洗練されたデザインから、多くのインスピレーションを得ています。",
+    cardCoding: "ウェブ開発とプログラミングに熱中しています。フロントエンド、バックエンドの両面から、実際に役立つシステムを作るのが得意です。",
+    cardGame: "ゲーム開発やゲーム内システムの構築に強い関心があります。ゲームメカニクス、UI、プレイヤー体験の設計を学ぶのが好きです。",
+    cardPhoto: "写真撮影と特撮フィギュア（仮面ライダー・ウルトラマン）の収集が趣味です。キャラクターデザインや造形美に惹かれています。",
+    photoTitle: "ギャラリー",
+    photoSub: "あなたの写真に置き換えてください",
+    galleryTip: "💡 .gallery-placeholder を &lt;img src=\"path/to/photo.jpg\"&gt; に変更してください",
+    projectsTitle: "プロジェクト",
+    projectsLoading: "⟨ ギットハブのデータを読み込み中... ⟩",
+    projectsNoFound: "⟨ リポジトリが見つかりません ⟩",
+    projectsFail: "⟨ 読み込み失敗 · 接続を確認してください ⟩",
+    footerCredits: "© 2025 BANYAPHON · バンヤポン · コスモス · FIGHT ON!",
+    gameControls: "SPACE / TAP = ジャンプ",
+    gameStart: "スペースキーでスタート",
+    gameFighting: "ファイト！FIGHTING!",
+    gameOver: "ゲームオーバー · タップして再挑戦",
+    mascotDialogs: [
+      '調子はどうですか？ 😊', '何かお手伝いしましょうか？', 'ファイト！Fight on!',
+      '変身！HENSHIN! ⚡', '僕の作品を見てね！', 'シュワッチ！Shuwatch!',
+      '写真を撮るのが好きですか？ 📷', 'いくぞ！ライダーキック！ 🦶'
+    ]
+  }
+};
+
+let currentLang = 'th';
+let activeDialogs = translations[currentLang].mascotDialogs;
+
+function switchLang(lang) {
+  currentLang = lang;
+  activeDialogs = translations[lang].mascotDialogs;
+  
+  // Update active button style
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if(btn.textContent.toLowerCase() === lang) btn.classList.add('active');
+  });
+
+  // Update navbar & headings
+  document.getElementById('nav-about').textContent = translations[lang].navAbout;
+  document.getElementById('nav-photo').textContent = translations[lang].navPhoto;
+  document.getElementById('nav-works').textContent = translations[lang].navWorks;
+  document.getElementById('hero-eyebrow').textContent = translations[lang].heroEyebrow;
+  document.getElementById('hero-jp').textContent = translations[lang].heroJp;
+  document.getElementById('hero-scroll-text').textContent = translations[lang].heroScroll;
+  document.getElementById('about-title').textContent = translations[lang].aboutTitle;
+  document.getElementById('photo-sec-title').textContent = translations[lang].photoTitle;
+  document.getElementById('projects-sec-title').textContent = translations[lang].projectsTitle;
+
+  // Update bio content
+  document.getElementById('about-greeting').textContent = translations[lang].aboutGreeting;
+  document.getElementById('about-bio-p1').textContent = translations[lang].aboutBioP1;
+  document.getElementById('about-bio-p2').textContent = translations[lang].aboutBioP2;
+  
+  // Update profile cards
+  document.getElementById('card-coding-text').textContent = translations[lang].cardCoding;
+  document.getElementById('card-game-text').textContent = translations[lang].cardGame;
+  document.getElementById('card-photo-text').textContent = translations[lang].cardPhoto;
+
+  // Update subtexts & tips
+  document.querySelectorAll('.ph-sub').forEach(el => el.textContent = translations[lang].photoSub);
+  document.getElementById('gallery-tip').innerHTML = translations[lang].galleryTip;
+  document.getElementById('footer-credits').textContent = translations[lang].footerCredits;
+
+  // Update game text placeholders
+  document.getElementById('game-controls').textContent = translations[lang].gameControls;
+  if (!gameStarted) {
+    document.getElementById('game-status').textContent = translations[lang].gameStart;
+  } else if (!gameRunning) {
+    document.getElementById('game-status').textContent = translations[lang].gameOver;
+  } else {
+    document.getElementById('game-status').textContent = translations[lang].gameFighting;
+  }
+
+  // Refresh github text if loading/empty
+  const loadingEl = document.getElementById('projects-loading');
+  if (loadingEl) {
+    loadingEl.textContent = translations[lang].projectsLoading;
+  }
+
+  // Trigger mascot speech change immediately
+  dialogIdx = 0;
+  showBubble(activeDialogs[0]);
+}
+
 // ─── CURSOR ───────────────────────────────────────────
 const cursor = document.getElementById('cursor');
 const cursorDot = document.getElementById('cursor-dot');
@@ -1061,7 +1224,7 @@ fetch('https://api.github.com/users/Banyaphon011/repos?sort=updated&per_page=12'
   .then(repos => {
     const grid = document.getElementById('projects-grid');
     if (!repos || !repos.length) {
-      grid.innerHTML = '<div class="projects-loading">⟨ NO REPOS FOUND ⟩</div>'; return;
+      grid.innerHTML = `<div class="projects-loading" id="projects-loading">${translations[currentLang].projectsNoFound}</div>`; return;
     }
     grid.innerHTML = repos.map(repo => {
       const lang = repo.language || 'Code';
@@ -1086,22 +1249,12 @@ fetch('https://api.github.com/users/Banyaphon011/repos?sort=updated&per_page=12'
   })
   .catch(() => {
     document.getElementById('projects-grid').innerHTML = `
-      <div class="projects-loading">⟨ FAILED TO LOAD · CHECK CONNECTION ⟩</div>`;
+      <div class="projects-loading" id="projects-loading">${translations[currentLang].projectsFail}</div>`;
   });
 
 // ─── MASCOT ───────────────────────────────────────────
 const mascotWrap = document.getElementById('mascot-wrap');
 const speechBubble = document.getElementById('speech-bubble');
-const dialogs = [
-  'วันนี้เป็นอย่างไรบ้าง? 😊',
-  'อยากให้ช่วยอะไรไหม?',
-  'ファイト！Fight on!',
-  'HENSHIN! 変身！⚡',
-  'ดูผลงานของผมด้วยนะ!',
-  'シュワッチ！Shuwatch!',
-  'คุณถ่ายรูปสวยไหม? 📷',
-  'Let\'s go, Rider Kick! 🦶'
-];
 let dialogIdx = 0;
 let mascotX = 80;
 let mascotDir = 1;
@@ -1116,16 +1269,16 @@ function showBubble(msg) {
 }
 
 mascotWrap.addEventListener('click', () => {
-  dialogIdx = (dialogIdx + 1) % dialogs.length;
-  showBubble(dialogs[dialogIdx]);
+  dialogIdx = (dialogIdx + 1) % activeDialogs.length;
+  showBubble(activeDialogs[dialogIdx]);
   mascotWrap.style.filter = 'drop-shadow(0 0 20px #5ec8f5)';
   setTimeout(() => mascotWrap.style.filter = '', 600);
 });
 
-setTimeout(() => showBubble(dialogs[0]), 1500);
+setTimeout(() => showBubble(activeDialogs[0]), 1500);
 setInterval(() => {
-  const idx = Math.floor(Math.random() * dialogs.length);
-  showBubble(dialogs[idx]);
+  const idx = Math.floor(Math.random() * activeDialogs.length);
+  showBubble(activeDialogs[idx]);
 }, 8000);
 
 function animateMascot() {
@@ -1169,7 +1322,11 @@ gameToggle.addEventListener('click', () => {
 });
 
 function jump() {
-  if (!gameStarted) { gameStarted = true; gameRunning = true; document.getElementById('game-status').textContent = 'FIGHTING!'; }
+  if (!gameStarted) { 
+    gameStarted = true; 
+    gameRunning = true; 
+    document.getElementById('game-status').textContent = translations[currentLang].gameFighting; 
+  }
   if (player.onGround) { player.vy = JUMP_V; player.onGround = false; }
 }
 
@@ -1204,7 +1361,7 @@ function drawGame() {
     gc.fillStyle = 'rgba(55,138,221,0.8)';
     gc.font = '11px "Share Tech Mono"';
     gc.textAlign = 'center';
-    gc.fillText('PRESS SPACE / TAP TO START', GW/2, GH/2);
+    gc.fillText(translations[currentLang].gameStart.toUpperCase(), GW/2, GH/2);
     gc.textAlign = 'left';
     drawPlayer();
     requestAnimationFrame(drawGame);
@@ -1213,9 +1370,9 @@ function drawGame() {
 
   if (!gameRunning) {
     gc.fillStyle = '#E24B4A';
-    gc.font = 'bold 14px "Share Tech Mono"';
+    gc.font = 'bold 12px "Share Tech Mono"';
     gc.textAlign = 'center';
-    gc.fillText('GAME OVER · TAP TO RETRY', GW/2, GH/2 - 10);
+    gc.fillText(translations[currentLang].gameOver.toUpperCase(), GW/2, GH/2 - 10);
     gc.fillStyle = '#378ADD';
     gc.font = '11px "Share Tech Mono"';
     gc.fillText('SCORE: ' + gameScore, GW/2, GH/2 + 10);
@@ -1243,13 +1400,13 @@ function drawGame() {
     if (player.x + player.w - 4 > ob.x && player.x + 4 < ob.x + ob.w &&
         player.y + player.h - 4 > ob.y && player.y + 4 < ob.y + ob.h) {
       gameRunning = false;
-      document.getElementById('game-status').textContent = 'GAME OVER';
+      document.getElementById('game-status').textContent = translations[currentLang].gameOver;
       document.getElementById('game-canvas').addEventListener('click', retryGame, { once: true });
       break;
     }
   }
 
-  // Draw obstacles (monsters)
+  // Draw obstacles
   obstacles.forEach(ob => {
     gc.fillStyle = '#E24B4A';
     gc.fillRect(ob.x, ob.y, ob.w, ob.h);
@@ -1259,11 +1416,12 @@ function drawGame() {
     gc.fillStyle = '#ff0000';
     gc.fillRect(ob.x + 3, ob.y + 4, 4, 4);
     gc.fillRect(ob.x + ob.w - 7, ob.y + 4, 4, 4);
-    // Label
+    
+    // Enemy Label (Kaiju)
     gc.fillStyle = '#ff8888';
     gc.font = '7px monospace';
     gc.textAlign = 'center';
-    gc.fillText('怪獣', ob.x + ob.w/2, ob.y - 3);
+    gc.fillText(currentLang === 'jp' ? '怪獣' : (currentLang === 'en' ? 'KAIJU' : 'สัตว์ประหลาด'), ob.x + ob.w/2, ob.y - 3);
     gc.textAlign = 'left';
   });
 
@@ -1273,17 +1431,14 @@ function drawGame() {
 
 function drawPlayer() {
   const p = player;
-  // Body
   gc.fillStyle = '#1a1a4e';
   gc.fillRect(p.x, p.y, p.w, p.h);
   gc.strokeStyle = '#378ADD';
   gc.lineWidth = 1;
   gc.strokeRect(p.x, p.y, p.w, p.h);
-  // Eyes
   gc.fillStyle = '#E24B4A';
   gc.fillRect(p.x + 3, p.y + 4, 6, 4);
   gc.fillRect(p.x + 14, p.y + 4, 6, 4);
-  // Color timer
   gc.beginPath();
   gc.arc(p.x + p.w/2, p.y + 16, 4, 0, Math.PI * 2);
   gc.strokeStyle = '#E24B4A';
@@ -1305,10 +1460,12 @@ function retryGame() {
   player.vy = 0;
   player.onGround = true;
   gameRunning = true;
-  document.getElementById('game-status').textContent = 'FIGHTING!';
+  document.getElementById('game-status').textContent = translations[currentLang].gameFighting;
 }
 
 drawGame();
+// Initial run to map elements
+switchLang('th');
 </script>
 </body>
 </html>
